@@ -1,28 +1,28 @@
-import { EventEmitter } from 'events';
-import { Socket } from 'net';
-import { ClientRequest, IncomingMessage } from 'http';
 // @ts-ignore
 import deferToConnect from 'defer-to-connect';
+import { EventEmitter } from 'events';
+import { ClientRequest, IncomingMessage } from 'http';
+import { Socket } from 'net';
 
 export interface Timings {
-	start: number;
-	socket?: number;
-	dnsLookupAt?: number;
-	tlsHandshakeAt?: number
 	connect?: number;
-	upload?: number;
-	response?: number;
+	dnsLookup?: number;
 	end?: number;
 	error?: number;
 	phases: {
-		wait?: number;
 		dns?: number;
-		tcp?: number;
-		request?: number;
-		firstByte?: number;
 		download?: number;
+		firstByte?: number;
+		request?: number;
+		tcp?: number;
 		total?: number;
+		wait?: number;
 	};
+	response?: number;
+	socket?: number;
+	start: number;
+	tlsHandshake?: number
+	upload?: number;
 }
 
 export default (request: ClientRequest): Timings => {
@@ -39,24 +39,24 @@ export default (request: ClientRequest): Timings => {
         (time[0] * NS_PER_SEC + time[1]) / MS_PER_NS;
 
 	const timings: Timings = {
-		start: getHrTimeDurationInMs(process.hrtime()),
-		socket: undefined,
-		dnsLookupAt: undefined,
-		tlsHandshakeAt: undefined,
 		connect: undefined,
-		upload: undefined,
-		response: undefined,
+		dnsLookup: undefined,
 		end: undefined,
 		error: undefined,
 		phases: {
-			wait: undefined,
 			dns: undefined,
-			tcp: undefined,
-			request: undefined,
-			firstByte: undefined,
 			download: undefined,
-			total: undefined
-		}
+			firstByte: undefined,
+			request: undefined,
+			tcp: undefined,
+			total: undefined,
+			wait: undefined,
+		},
+		response: undefined,
+		socket: undefined,
+		start: getHrTimeDurationInMs(process.hrtime()),
+		tlsHandshake: undefined,
+		upload: undefined,
     };
 
 	const handleError = (origin: EventEmitter): void => {
@@ -88,26 +88,26 @@ export default (request: ClientRequest): Timings => {
 		timings.phases.wait = timings.socket - timings.start;
 
 		const lookupListener = (): void => {
-			timings.dnsLookupAt = getHrTimeDurationInMs(process.hrtime());
-			timings.phases.dns = timings.dnsLookupAt - timings.socket!;
+			timings.dnsLookup = getHrTimeDurationInMs(process.hrtime());
+			timings.phases.dns = timings.dnsLookup - timings.socket!;
 		};
 
 		socket.once('lookup', lookupListener);
 
 		socket.on('secureConnect', () => {
-			timings.tlsHandshakeAt = getHrTimeDurationInMs(process.hrtime())
+			timings.tlsHandshake = getHrTimeDurationInMs(process.hrtime())
 		})
 
 		deferToConnect(socket, () => {
 			timings.connect = getHrTimeDurationInMs(process.hrtime());
 
-			if (timings.dnsLookupAt === undefined) {
+			if (timings.dnsLookup === undefined) {
 				socket.removeListener('lookup', lookupListener);
-				timings.dnsLookupAt = timings.connect;
-				timings.phases.dns = timings.dnsLookupAt - timings.socket!;
+				timings.dnsLookup = timings.connect;
+				timings.phases.dns = timings.dnsLookup - timings.socket!;
 			}
 
-			timings.phases.tcp = timings.connect - timings.dnsLookupAt;
+			timings.phases.tcp = timings.connect - timings.dnsLookup;
 
 			if (uploadFinished && !timings.upload) {
 				onUpload();

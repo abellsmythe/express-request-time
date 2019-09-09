@@ -1,6 +1,6 @@
 {
  "name": "@abellsmythe/request-time",
- "version": "1.0.2",
+ "version": "1.0.3",
  "description": "Timings for HTTP requests",
  "main": "dist",
  "engines": {

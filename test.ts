@@ -67,7 +67,7 @@ test('by default everything is set to undefined', t => {
   t.is(typeof timings, 'object');
   t.is(typeof timings.start, 'number');
   t.is(timings.socket, undefined);
-  t.is(timings.dnsLookupAt, undefined);
+  t.is(timings.dnsLookup, undefined);
   t.is(timings.connect, undefined);
   t.is(timings.response, undefined);
   t.is(timings.end, undefined);
@@ -83,7 +83,7 @@ test('timings', async t => {
   t.is(typeof timings, 'object');
   t.is(typeof timings.start, 'number');
   t.is(typeof timings.socket, 'number');
-  t.is(typeof timings.dnsLookupAt, 'number');
+  t.is(typeof timings.dnsLookup, 'number');
   t.is(typeof timings.connect, 'number');
   t.is(typeof timings.upload, 'number');
   t.is(typeof timings.response, 'number');
@@ -105,8 +105,8 @@ test('phases', async t => {
   t.is(typeof timings.phases.total, 'number');
 
   t.is(timings.phases.wait, timings.socket! - timings.start);
-  t.is(timings.phases.dns, timings.dnsLookupAt! - timings.socket!);
-  t.is(timings.phases.tcp, timings.connect! - timings.dnsLookupAt!);
+  t.is(timings.phases.dns, timings.dnsLookup! - timings.socket!);
+  t.is(timings.phases.tcp, timings.connect! - timings.dnsLookup!);
   t.is(timings.phases.request, timings.upload! - timings.connect!);
   t.is(timings.phases.firstByte, timings.response! - timings.upload!);
   t.is(timings.phases.download, timings.end! - timings.response!);
@@ -176,7 +176,7 @@ test('sensible timings', async t => {
   await pEvent(response, 'end');
 
   t.true(timings.socket! >= now);
-  t.true(timings.dnsLookupAt! >= now);
+  t.true(timings.dnsLookup! >= now);
   t.true(timings.connect! >= now);
   t.true(timings.response! >= now);
   t.true(timings.end! >= now);
