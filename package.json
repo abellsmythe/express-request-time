@@ -1,39 +1,72 @@
 {
-  "name": "express-request-time",
-  "version": "1.0.0",
-  "description": "Express Middleware with time metrics",
-  "main": "./lib/index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "lint": "eslint --ext js .",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/abellsmythe/express-request-time.git"
-  },
-  "keywords": [
-    "express",
-    "middleware",
-    "request",
-    "time",
-    "metrics"
+ "name": "express-request-time",
+ "version": "1.0.0",
+ "description": "Express Middleware with time metrics",
+ "main": "./lib/index.js",
+ "directories": {
+  "lib": "lib"
+ },
+ "scripts": {
+  "build": "del-cli dist && tsc",
+  "lint": "eslint --ext js .",
+  "test": "nyc ava"
+ },
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/abellsmythe/express-request-time.git"
+ },
+ "keywords": [
+  "express",
+  "middleware",
+  "request",
+  "time",
+  "metrics"
+ ],
+ "author": "Alton Bell Smythe <abellsmythe@gmail.com>",
+ "license": "MIT",
+ "bugs": {
+  "url": "https://github.com/abellsmythe/express-request-time/issues"
+ },
+ "homepage": "https://github.com/abellsmythe/express-request-time#readme",
+ "devDependencies": {
+  "@types/node": "^12.7.4",
+  "@typescript-eslint/eslint-plugin": "^2.1.0",
+  "@typescript-eslint/parser": "^2.1.0",
+  "ava": "^2.3.0",
+  "eslint": "^6.3.0",
+  "eslint-config-standard": "^14.1.0",
+  "eslint-config-xo-typescript": "^0.17.0",
+  "eslint-plugin-import": "^2.18.2",
+  "eslint-plugin-node": "^10.0.0",
+  "eslint-plugin-promise": "^4.2.1",
+  "eslint-plugin-standard": "^4.0.1",
+  "nyc": "^14.1.1",
+  "p-event": "^4.1.0",
+  "prettier": "^1.18.2",
+  "ts-node": "^8.3.0",
+  "tslint": "^5.19.0",
+  "tslint-config-airbnb": "^5.11.1",
+  "tslint-config-prettier": "^1.18.0",
+  "tslint-plugin-prettier": "^2.0.1",
+  "typescript": "^3.6.2"
+ },
+ "dependencies": {
+  "defer-to-connect": "^1.0.2"
+ },
+ "types": "dist",
+ "nyc": {
+  "extension": [
+   ".ts"
+  ]
+ },
+ "ava": {
+  "babel": false,
+  "compileEnhancements": false,
+  "extensions": [
+   "ts"
   ],
-  "author": "Alton Bell Smythe <abellsmythe@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/abellsmythe/express-request-time/issues"
-  },
-  "homepage": "https://github.com/abellsmythe/express-request-time#readme",
-  "devDependencies": {
-    "eslint": "^6.3.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
-  },
-  "dependencies": {}
+  "require": [
+   "ts-node/register"
+  ]
+ }
 }
