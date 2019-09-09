@@ -1,23 +1,27 @@
 {
- "name": "express-request-time",
- "version": "1.0.0",
- "description": "Express Middleware with time metrics",
- "main": "./lib/index.js",
- "directories": {
-  "lib": "lib"
+ "name": "@abellsmythe/request-time",
+ "version": "1.0.1",
+ "description": "Timings for HTTP requests",
+ "main": "dist",
+ "engines": {
+  "node": ">=8"
  },
+ "files": [
+  "dist"
+ ],
  "scripts": {
-  "build": "del-cli dist && tsc",
+  "build": "tsc",
   "lint": "eslint --ext js .",
+  "prepublishOnly": "npm run build",
   "test": "nyc ava"
  },
  "repository": {
   "type": "git",
-  "url": "git+https://github.com/abellsmythe/express-request-time.git"
+  "url": "git+https://github.com/abellsmythe/request-time.git"
  },
  "keywords": [
-  "express",
-  "middleware",
+  "http",
+  "https",
   "request",
   "time",
   "metrics"
@@ -25,9 +29,9 @@
  "author": "Alton Bell Smythe <abellsmythe@gmail.com>",
  "license": "MIT",
  "bugs": {
-  "url": "https://github.com/abellsmythe/express-request-time/issues"
+  "url": "https://github.com/abellsmythe/request-time/issues"
  },
- "homepage": "https://github.com/abellsmythe/express-request-time#readme",
+ "homepage": "https://github.com/abellsmythe/request-time#readme",
  "devDependencies": {
   "@types/node": "^12.7.4",
   "@typescript-eslint/eslint-plugin": "^2.1.0",

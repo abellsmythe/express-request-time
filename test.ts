@@ -7,7 +7,7 @@ import pEvent from 'p-event';
 import {
     parse as parseUrl,
     URL,
-} from 'url'; // eslint-disable-line node/no-deprecated-api
+} from 'url';
 import util from 'util';
 import timer, { Timings } from './lib';
 
