@@ -92,18 +92,20 @@ export default (request: ClientRequest): Timings => {
 			timings.phases.dns = timings.dnsLookup - timings.socket!;
 		};
 
+		const tlsListener = (): void => {
+			timings.tlsHandshake = getHrTimeDurationInMs(process.hrtime());
+		};
+
 		socket.once('lookup', lookupListener);
 
-		socket.on('secureConnect', () => {
-			timings.tlsHandshake = getHrTimeDurationInMs(process.hrtime())
-		})
+		socket.on('secureConnect', tlsListener);
 
 		deferToConnect(socket, () => {
 			timings.connect = getHrTimeDurationInMs(process.hrtime());
 
 			if (timings.dnsLookup === undefined) {
 				socket.removeListener('lookup', lookupListener);
-				timings.dnsLookup = timings.connect;
+				timings.dnsLookup = timings.start;
 				timings.phases.dns = timings.dnsLookup - timings.socket!;
 			}
 

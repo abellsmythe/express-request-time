@@ -51,9 +51,9 @@ request.on('response', response => {
 {
     start: 20019170.414002,
     socket: 20019171.943738,
-    dnsLookupAt: 20019182.811348,
-    tlsHandshakeAt: 20019245.32874,
+    dnsLookup: 20019182.811348,
     connect: 20019194.637675,
+    tlsHandshake: 20019245.32874,
     upload: 20019246.615841,
     response: 20019284.613933,
     end: 20019288.80115,
@@ -97,6 +97,6 @@ Returns: `Object`
 
 If something is not measured yet, it will be `undefined`.
 
-> **Note**: The time is a `number` representing the milliseconds
+> **Note**: The time is a `number` representing the milliseconds without elapsing since the UNIX epoch.
 
 > **Note**: `request-time` uses `process.hrtime()` from node as it's not a subject of clock drift
